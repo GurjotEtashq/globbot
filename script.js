@@ -1,7 +1,27 @@
-async function sendMessage() {
+function toggleChat() {
 
-    const input = document.getElementById("userInput");
-    const message = input.value.trim();
+    const chatPopup =
+        document.getElementById("chatPopup");
+
+    if (
+        chatPopup.style.display === "flex"
+    ) {
+
+        chatPopup.style.display = "none";
+
+    } else {
+
+        chatPopup.style.display = "flex";
+    }
+}
+
+function sendMessage() {
+
+    const input =
+        document.getElementById("userInput");
+
+    const message =
+        input.value.trim();
 
     if (message === "") {
         return;
@@ -11,48 +31,20 @@ async function sendMessage() {
 
     input.value = "";
 
-    try {
+    /*
+    =====================================
+    TEMPORARY BOT RESPONSE
+    =====================================
+    */
 
-        /*
-        ======================================
-        REPLACE THIS URL WITH SALESFORCE URL
-        ======================================
-        */
-
-        const response = await fetch("YOUR_AGENTFORCE_ENDPOINT", {
-
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json",
-
-                /*
-                NEVER expose real token publicly.
-                Use OAuth or Embedded Messaging later.
-                */
-
-                "Authorization": "Bearer YOUR_ACCESS_TOKEN"
-            },
-
-            body: JSON.stringify({
-                message: message
-            })
-
-        });
-
-        const data = await response.json();
-
-        addMessage(data.reply || "No response received", "bot");
-
-    } catch (error) {
-
-        console.error(error);
+    setTimeout(() => {
 
         addMessage(
-            "Unable to connect to Salesforce Agentforce.",
+            "Thanks for contacting Globbot Support. Salesforce Agentforce integration will be connected next.",
             "bot"
         );
-    }
+
+    }, 1000);
 }
 
 function addMessage(text, sender) {
@@ -64,8 +56,11 @@ function addMessage(text, sender) {
         document.createElement("div");
 
     if (sender === "user") {
+
         messageDiv.classList.add("user-message");
+
     } else {
+
         messageDiv.classList.add("bot-message");
     }
 
@@ -77,18 +72,14 @@ function addMessage(text, sender) {
         chatMessages.scrollHeight;
 }
 
-/*
-========================================
-PRESS ENTER TO SEND MESSAGE
-========================================
-*/
+/* ENTER KEY SUPPORT */
 
 document
     .getElementById("userInput")
     .addEventListener("keypress", function(event) {
 
         if (event.key === "Enter") {
+
             sendMessage();
         }
-
 });
