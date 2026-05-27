@@ -1,9 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Agentforce Chatbot</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Agentforce Chatbot</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<div class="chat-container">
+
+    <div class="chat-header">
+        Salesforce Agentforce Assistant
+    </div>
+
+    <div id="chat-messages" class="chat-messages"></div>
+
+    <div class="chat-input-container">
+        <input type="text" id="userInput" placeholder="Type message..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>
