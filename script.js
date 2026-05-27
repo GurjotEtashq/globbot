@@ -15,7 +15,7 @@ function toggleChat() {
     }
 }
 
-function sendMessage() {
+async function sendMessage() {
 
     const input =
         document.getElementById("userInput");
@@ -31,20 +31,123 @@ function sendMessage() {
 
     input.value = "";
 
-    /*
-    =====================================
-    TEMPORARY BOT RESPONSE
-    =====================================
-    */
+    try {
 
-    setTimeout(() => {
+        /*
+        ======================================
+        SALESFORCE TOKEN
+        ======================================
+        */
+
+        const accessToken =
+            await getSalesforceAccessToken();
+
+        /*
+        ======================================
+        SEND MESSAGE TO AGENTFORCE
+        ======================================
+        */
+
+        const response =
+            await fetch(
+                "YOUR_AGENTFORCE_API_ENDPOINT",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            `Bearer ${accessToken}`
+                    },
+
+                    body: JSON.stringify({
+
+                        message: message,
+
+                        sessionId: "demo-session"
+
+                    })
+                }
+            );
+
+        const data =
+            await response.json();
+
+        /*
+        ======================================
+        SHOW BOT RESPONSE
+        ======================================
+        */
 
         addMessage(
-            "Thanks for contacting Globbot Support. Salesforce Agentforce integration will be connected next.",
+            data.reply ||
+            "No response received",
             "bot"
         );
 
-    }, 1000);
+    } catch(error) {
+
+        console.error(error);
+
+        addMessage(
+            "Unable to connect to Salesforce Agentforce.",
+            "bot"
+        );
+    }
+}
+
+async function getSalesforceAccessToken() {
+
+    /*
+    ======================================
+    NEVER HARDCODE IN PRODUCTION
+    ======================================
+    */
+
+    const clientId =
+        "3MVG9zSy9nAai1xnwCwN0reCi17a.Bg7gJ5SN9tlZW7SVIH5cKYqiDZWd1khISzzcVfVUF8flhJSjFoa5FbjX";
+
+    const clientSecret =
+        "3DEB44EFE031E9A0511AD2C112E4234CF16CA50AFA1477758ADEF1632A8F3427";
+
+    const username =
+        "rj@etashq.com2025_06_24_19-15-27.demo";
+
+    const password =
+        "Etashq@2025";
+
+    /*
+    ======================================
+    SALESFORCE TOKEN API
+    ======================================
+    */
+
+    const response =
+        await fetch(
+            "https://login.salesforce.com/services/oauth2/token",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/x-www-form-urlencoded"
+                },
+
+                body:
+                    `grant_type=password` +
+                    `&client_id=${clientId}` +
+                    `&client_secret=${clientSecret}` +
+                    `&username=${username}` +
+                    `&password=${password}`
+            }
+        );
+
+    const data =
+        await response.json();
+
+    return data.access_token;
 }
 
 function addMessage(text, sender) {
