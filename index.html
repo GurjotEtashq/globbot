@@ -2,27 +2,76 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Globbot - Agentforce Chatbot</title>
+
+    <title>Globbot Support</title>
 
     <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-    <div class="chat-widget">
+    <!-- HERO SECTION -->
 
-        <div class="chat-header">
-            <h2>Globbot Assistant</h2>
-            <p>Powered by Salesforce Agentforce</p>
+    <section class="hero-section">
+
+        <div class="overlay"></div>
+
+        <div class="hero-content">
+
+            <h1>Welcome to Globbot Store</h1>
+
+            <p>
+                Smart products. Fast support.
+                AI-powered customer experience.
+            </p>
+
+            <button class="shop-button">
+                Explore Products
+            </button>
+
         </div>
 
-        <div id="chatMessages" class="chat-messages">
+    </section>
+
+
+    <!-- FLOATING CHAT BUTTON -->
+
+    <div class="chat-button" onclick="toggleChat()">
+
+        💬 Hey! Need Support?
+
+    </div>
+
+
+    <!-- CHATBOX -->
+
+    <div class="chat-popup" id="chatPopup">
+
+        <div class="chat-header">
+
+            <div>
+                <h3>Globbot Assistant</h3>
+                <span>Online</span>
+            </div>
+
+            <button onclick="toggleChat()">✖</button>
+
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
 
             <div class="bot-message">
-                Hello :wave:<br>
-                How can I help you today?
+                👋 Hello!<br><br>
+                I can help you with:
+                <br><br>
+                • Product Search<br>
+                • Orders<br>
+                • Warranty<br>
+                • Support Requests
             </div>
 
         </div>
@@ -32,7 +81,7 @@
             <input
                 type="text"
                 id="userInput"
-                placeholder="Type your message..."
+                placeholder="Ask something..."
             >
 
             <button onclick="sendMessage()">
