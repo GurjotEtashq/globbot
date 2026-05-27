@@ -33,21 +33,10 @@ async function sendMessage() {
 
     try {
 
-        /*
-        ======================================
-        SALESFORCE TOKEN
-        ======================================
-        */
-
         const accessToken =
             await getSalesforceAccessToken();
 
-        /*
-        ======================================
-        SEND MESSAGE TO AGENTFORCE
-        ======================================
-        */
-
+        Console.log('AccessToken',accessToken);
         const response =
             await fetch(
                 "YOUR_AGENTFORCE_API_ENDPOINT",
@@ -100,12 +89,6 @@ async function sendMessage() {
 
 async function getSalesforceAccessToken() {
 
-    /*
-    ======================================
-    NEVER HARDCODE IN PRODUCTION
-    ======================================
-    */
-
     const clientId =
         "3MVG9zSy9nAai1xnwCwN0reCi17a.Bg7gJ5SN9tlZW7SVIH5cKYqiDZWd1khISzzcVfVUF8flhJSjFoa5FbjX";
 
@@ -117,12 +100,6 @@ async function getSalesforceAccessToken() {
 
     const password =
         "Etashq@2025";
-
-    /*
-    ======================================
-    SALESFORCE TOKEN API
-    ======================================
-    */
 
     const response =
         await fetch(
@@ -146,6 +123,8 @@ async function getSalesforceAccessToken() {
 
     const data =
         await response.json();
+
+    Console.log('data',data);
 
     return data.access_token;
 }
